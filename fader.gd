@@ -33,13 +33,23 @@ signal scene_changed
 ## Call to fade to black, load a scene, then fade back in.
 func FadeTo(scene):
 	var tree = get_tree()
-	# IMP Mode
+	if $root.has_node("_IMP"):
+		_IMP.mode = _IMP.TRANSITION
 	FadeOut()
 	await faded_out
-	tree.change_scene_to_file(scene)
+	if scene is String:
+		tree.change_scene_to_file(scene)
+	elif scene is PackedScene:
+		tree.change_scene_to_packed(scene)
+	else:
+		print("Scene switch failed; scene was not path or pack.")
+		FadeIn()
+		await faded_in
+		return
 	await tree.process_frame
 	emit_signal("scene_changed")
 	FadeIn()
 	await faded_in
-	# IMP Mode
+	if $root.has_node("_IMP"):
+		_IMP.mode = _IMP.WAITING
 	
