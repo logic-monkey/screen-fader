@@ -1,13 +1,16 @@
 extends CanvasLayer
 ## Simple, bone-easy screen fader. Fades to black, fades in. 
 
+## How long a single fade takes.
 @export
 var time_to_fade := 0.25
 
 func _ready():
 	FadeIn()
 	
+## Emitted when fading out is complete.
 signal faded_out
+## Emitted when fading in is complete.
 signal faded_in
 
 ## Call when the screen is black to fade in.
@@ -28,7 +31,7 @@ func FadeOut():
 	await tween.finished
 	emit_signal("faded_out")
 
-## The scene has finished changing.
+## Emitted when the scene has finished changing.
 signal scene_changed
 ## Call to fade to black, load a scene, then fade back in.
 func FadeTo(scene):
