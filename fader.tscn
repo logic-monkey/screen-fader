@@ -5,6 +5,7 @@
 [node name="Fader" type="CanvasLayer"]
 layer = 128
 script = ExtResource("1_xtb3l")
+time_to_fade = 0.333
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
